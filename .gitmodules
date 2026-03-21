@@ -1,0 +1,6 @@
+[submodule "extern/pulseq"]
+	path = extern/pulseq
+	url = https://github.com/pulseq/pulseq.git
+[submodule "extern/KomaMRI.jl"]
+	path = extern/KomaMRI.jl
+	url = https://github.com/JuliaHealth/KomaMRI.jl.git

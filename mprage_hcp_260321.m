@@ -33,8 +33,13 @@ ro_dur = dwell * N_ro * ro_os;  % 4.800 ms  (BW ~ 208 Hz/pixel)
 
 % Sagittal 0.7 mm isotropic
 % Encoding axes: x = L/R (partition), y = A/P (phase), z = S/I (readout)
-fov = [179.2 224 224] * 1e-3;   % [x y z] FOV [m]
-N   = [256  320 320];           % [x y z] matrix
+phaseOS       = 0.10;           % 10% phase oversampling (avoids aliasing at FOV edges)
+N_phase_base  = 320;            % base phase-encoding matrix
+N_phase       = round(N_phase_base * (1 + phaseOS));  % 352 with oversampling
+fov_phase     = 224e-3 * (1 + phaseOS);               % FOV extended to match
+
+fov = [179.2e-3 fov_phase 224e-3];  % [x y z] FOV [m]
+N   = [256  N_phase 320];           % [x y z] matrix
 
 ax.d1 = 'z';  % readout        (S/I)
 ax.d2 = 'x';  % partition enc  (L/R, inner loop)

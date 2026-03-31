@@ -9,6 +9,7 @@ module load julia-uoneasy/1.10.4-linux-x86_64
 module load matlab-uon/r2025a
 module load bart-img/0.9.00
 module load conda-img
+module load cuda-uoneasy/12.6.0
 
 # Activate conda env with sigpy (needed by Pulseq's makeAdiabaticPulse).
 # Create it once with:  conda create -n mrisim python=3.11 && source activate mrisim && pip install sigpy
@@ -21,11 +22,16 @@ export QT_QPA_PLATFORM=offscreen
 # without an explicit Pkg.activate() in every script.
 export JULIA_PROJECT="$PROJ_DIR"
 
-# Julia depot stays in ~/.julia (persists across jobs on Ada's home filesystem).
-# If you hit home-directory quota, override with a group/scratch path, e.g.:
-#   export JULIA_DEPOT_PATH="/gpfs01/scratch/$USER/julia_depot:$JULIA_DEPOT_PATH"
+# Julia depot redirected to scratch to avoid home-directory quota exhaustion.
+export JULIA_DEPOT_PATH="/share/ConnLS/scratch/$USER/julia_depot:${JULIA_DEPOT_PATH:-}"
 
-echo "Loaded Julia, Matlab, and BART"
-echo "JULIA_PROJECT=$JULIA_PROJECT"
+echo "================================================"
+echo "mri_simulation"
+echo "================================================"
 echo ""
+echo "Loaded Julia, Matlab, BART, and CUDA 12.6"
+echo "JULIA_PROJECT=$JULIA_PROJECT"
 echo "First-time setup: run  julia setup_julia.jl  to install Julia packages."
+echo ""
+echo "================================================"
+echo ""

@@ -1,0 +1,2 @@
+- [ ] Write sbatch script to run KomaMRI simulation on GPU node
+- [ ] Use BART to reconstruct the simulated kspace data

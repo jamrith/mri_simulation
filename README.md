@@ -38,11 +38,31 @@ are cached in `~/.julia` and persist across jobs.
 julia my_script.jl
 ```
 
+## Running the MPRAGE-GRAPPA simulation
+
+```bash
+# Submit from the project root — logs/ must exist before sbatch is called
+mkdir -p logs
+sbatch run_simulation.slurm
+```
+
+Outputs land in `sim_output/` (k-space CFL files) and `sim_output/recon/` (reconstructed images).
+
+To run interactively instead:
+
+```bash
+. env.sh
+julia -t 4 simulate_mprage_grappa.jl
+bash reconstruct_bart.sh
+```
+
 ## Dependencies
 
 | Tool | Source |
 |------|--------|
 | [KomaMRI.jl](https://github.com/JuliaHealth/KomaMRI.jl) | `extern/KomaMRI.jl` (submodule) |
 | [pulseq](https://github.com/pulseq/pulseq) | `extern/pulseq` (submodule) |
-| BART | `module load bart-img/0.9.00` (Ada module) |
+| CUDA.jl | Julia package (GPU backend for KomaMRI) |
+| BART | `module load bart-img/0.9.00` — CPU-only build |
+| CUDA | `module load cuda-uoneasy/12.6.0` (Ada module) |
 | Matlab | `module load matlab-uon/r2025a` (Ada module) |
